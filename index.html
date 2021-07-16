@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- <link rel="shortcut icon" href="#" /> -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>1A2B</title>
+</head>
+
+<body>
+
+    <h2 style="margin-top: 20pt; margin-bottom: 20pt; text-align: center;">1A2B</h2>
+
+    <form id="guessForm">
+        <table width="326" border="0" align="center">
+            <tr>
+                <td width="168" height="49" align="center">
+                    <label>
+                        <input type="text" name="guess" id="guess" />
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <input type="submit" id="submitGuess" value="submit">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <p id="result"></p> <!-- 顯示回傳資料 -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>guess</th>
+                            <th>result</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#submitGuess").click(function () { //ID 為 submitGuess 的按鈕被點擊時
+                $.ajax({
+                    type: "POST",
+                    url: "ValidateTheGuess.php",
+                    dataType: "json",
+                    data: {
+                        guess: $("#guess").val()
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.boolean == 1) {
+                            str = '<tr><td>' + '1' + '</td><td>' + data.guess + '</td><td>' + data.boolean + '</td></tr>';
+                            $("#history").append(str);
+                            // $("#result").html('<font color="#007500">您的暱稱為「<font color="#0000ff">' + data.guess + '</font>」，性別為「<font color="#0000ff">' + data.boolean + '</font>」！</font>');
+                        } else { //否則讀取後端回傳 json 資料 errorMsg 顯示錯誤訊息
+                            // $("#demo")[0].reset(); 
+                            alert("wrong format of  the guess");
+                        }
+                    },
+                    error: function () {
+                        alert("error!");
+                    }
+                    // error: function(jqXHR) {
+                    //     $("#demo")[0].reset(); //重設 ID 為 demo 的 form (表單)
+                    //     $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
+                    // }
+                })
+                return false;
+            })
+        });
+
+    </script>
+
+</body>
+
+</html>
