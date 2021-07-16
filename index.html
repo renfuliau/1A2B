@@ -67,18 +67,20 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            var id = 0;
             $("#submitGuess").click(function () { //ID 為 submitGuess 的按鈕被點擊時
+                id++;
                 $.ajax({
                     type: "POST",
                     url: "ValidateTheGuess.php",
                     dataType: "json",
                     data: {
+                        id: id,
                         guess: $("#guess").val()
                     },
                     success: function (data) {
-                        console.log(data);
                         if (data.boolean == 1) {
-                            str = '<tr><td>' + '1' + '</td><td>' + data.guess + '</td><td>' + data.boolean + '</td></tr>';
+                            str = '<tr><td>' + id + '</td><td>' + data.guess + '</td><td>' + data.boolean + '</td></tr>';
                             $("#history").append(str);
                             // $("#result").html('<font color="#007500">您的暱稱為「<font color="#0000ff">' + data.guess + '</font>」，性別為「<font color="#0000ff">' + data.boolean + '</font>」！</font>');
                         } else { //否則讀取後端回傳 json 資料 errorMsg 顯示錯誤訊息
