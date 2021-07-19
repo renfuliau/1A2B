@@ -43,7 +43,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>id</th>
+                            <th>times</th>
                             <th>guess</th>
                             <th>result</th>
                         </tr>
@@ -67,34 +67,33 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            var id = 0;
+            var times = 1;
             $("#submitGuess").click(function () { //ID 為 submitGuess 的按鈕被點擊時
-                id++;
                 $.ajax({
                     type: "POST",
-                    url: "ValidateTheGuess.php",
+                    url: "game.php",
                     dataType: "json",
                     data: {
-                        id: id,
+                        times: times,
                         guess: $("#guess").val()
                     },
                     success: function (data) {
-                        if (data.boolean == 1) {
-                            str = '<tr><td>' + id + '</td><td>' + data.guess + '</td><td>' + data.boolean + '</td></tr>';
+                        if (data.errorCode == 0) {
+                            times++;
+                            str = '<tr><td>' + data.data.times + '</td><td>' + data.data.guess + '</td><td>' + data.data.parse_result + '</td></tr>';
                             $("#history").append(str);
-                            // $("#result").html('<font color="#007500">您的暱稱為「<font color="#0000ff">' + data.guess + '</font>」，性別為「<font color="#0000ff">' + data.boolean + '</font>」！</font>');
-                        } else { //否則讀取後端回傳 json 資料 errorMsg 顯示錯誤訊息
-                            // $("#demo")[0].reset(); 
-                            alert("wrong format of  the guess");
+                        } else {
+                            alert("答案格式錯誤，請輸入 4 位不重複的數字");
+                        }
+                        if (data.data.parse_result == '4A0B') {
+                            if (!alert('恭喜你！答對了！\n答案為 ' + $("#guess").val() + '\n花費 ' + (times - 1) + '次\n按確定重新開始!')) {
+                                window.location.reload();
+                            }
                         }
                     },
                     error: function () {
                         alert("error!");
                     }
-                    // error: function(jqXHR) {
-                    //     $("#demo")[0].reset(); //重設 ID 為 demo 的 form (表單)
-                    //     $("#result").html('<font color="#ff0000">發生錯誤：' + jqXHR.status + '</font>');
-                    // }
                 })
                 return false;
             })
