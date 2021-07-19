@@ -10,11 +10,13 @@ header('Content-Type: application/json; charset=UTF-8');
 $times = $_POST['times'];
 $guess = $_POST['guess'];
 $validate = validateGuess($guess);
+
+// 如果格式錯誤，錯誤回應
 if ($validate == 0) {
     return errorResponse(99, '請輸入不重複的4位數字');
 }
 
-// get client ip
+// 取得 client ip
 if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
     $ip = $_SERVER["HTTP_CLIENT_IP"];
 } elseif (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
@@ -22,13 +24,19 @@ if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
 } else {
     $ip = $_SERVER["REMOTE_ADDR"];
 }
+
+// 取得解答
 $answer = getAnswer($ip, $conn);
-// echo $answer;
+
+// 分析結果
 $parse_result = parseGuess($guess, $answer);
+
+// 如果答對, 重設解答
 if ($parse_result == '4A0B') {
     updateNewAnswer($ip, $conn);
 }
-// echo $parse_result;
+
+// 成功回應
 $response_data = [
     'times' => $times,
     'guess' => $guess,
