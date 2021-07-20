@@ -1,5 +1,6 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/service/Answer.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/service/History.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/service/Guess.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/service/Response.php';
 
@@ -34,6 +35,7 @@ $parse_result = parseGuess($guess, $answer);
 // 如果答對, 重設解答
 if ($parse_result == '4A0B') {
     updateNewAnswer($ip, $conn);
+    addHistory($times, $conn);
 }
 
 // 成功回應

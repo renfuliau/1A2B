@@ -5,7 +5,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
 if (!$conn) {
-    die('連線失敗1' . mysqli_connect_error());
+    die('連線失敗' . mysqli_connect_error());
 }
 
 function getAnswer($ip, $conn)
