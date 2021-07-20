@@ -1,5 +1,5 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/1A2B/config/db.php';
 
 function getAnswer($ip, $conn)
 {

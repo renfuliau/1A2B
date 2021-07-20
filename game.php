@@ -1,8 +1,8 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/service/Answer.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/service/History.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/service/Guess.php';
-include $_SERVER['DOCUMENT_ROOT'] . '/service/Response.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/1A2B/service/Answer.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/1A2B/service/History.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/1A2B/service/Guess.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/1A2B/service/Response.php';
 
 // 設定資料類型為 json，編碼 utf-8
 header('Content-Type: application/json; charset=UTF-8'); 
