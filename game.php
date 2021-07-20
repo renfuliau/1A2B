@@ -32,9 +32,9 @@ $answer = getAnswer($ip, $conn);
 // 分析結果
 $parse_result = parseGuess($guess, $answer);
 
-// 如果答對, 重設解答
+// 如果答對, 重設解答, 新增排行榜
 if ($parse_result == '4A0B') {
-    updateNewAnswer($ip, $conn);
+    resetAnswer($ip, $conn);
     addHistory($times, $conn);
 }
 

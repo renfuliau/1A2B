@@ -1,13 +1,6 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
 
-// create db connect
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-if (!$conn) {
-    die('連線失敗' . mysqli_connect_error());
-}
-
 function getHistory($conn)
 {
     $sql = "SELECT play_times FROM history ORDER BY `play_times` ASC LIMIT 10";

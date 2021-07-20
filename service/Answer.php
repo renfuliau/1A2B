@@ -1,13 +1,6 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
 
-// create db connect
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-if (!$conn) {
-    die('連線失敗' . mysqli_connect_error());
-}
-
 function getAnswer($ip, $conn)
 {
     $sql = "SELECT * FROM players WHERE ip_address = '" . $ip . "'";
@@ -42,7 +35,7 @@ function getNewAnswer()
     return implode('', array_slice($tenNumberArray, 0, 4));
 }
 
-function updateNewAnswer($ip, $conn)
+function resetAnswer($ip, $conn)
 {
     $answer = getNewAnswer();
     $update_sql = "UPDATE players SET answer = '" . $answer . "' WHERE ip_address = '" . $ip . "'";
